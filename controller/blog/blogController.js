@@ -133,7 +133,6 @@ exports.updateBlog = async (req, res) => {
       },
     }
   );
-
   res.redirect("/single/" + id);
 };
 //delete blog
