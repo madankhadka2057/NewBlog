@@ -24,6 +24,7 @@ exports.postBlog = async (req, res) => {
   const fileName = req.file.filename;
   const fileSize = req.file.size;
   const image = process.env.PROJECT_URL + fileName;
+  // console.log(process.env.PROJECT_URL)
   //check fileSize is is less then 2mb or not
   if (fileSize > 2097152) {
     req.flash("error", "File size must be less than 2MB");
@@ -103,9 +104,12 @@ exports.updateBlog = async (req, res) => {
     // console.log(req.file)
     fileUrl = process.env.PROJECT_URL + req.file.filename; // process.env.PROJECT_URL-->http://localhost:3000/ and req.file.filename-->1696487619794-DSC_0032.JPG
     const oldImagePath = oldDatas[0].image;
+    // console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     // console.log(oldImagePath)//http://localhost:3000/1696487619794-DSC_0032.JPG
-    const actualPath = oldImagePath.slice(23);
-    // console.log(actualPath)//1696487619794-DSC_0032.JPG
+    const backendUrlLength=process.env.PROJECT_URL.length
+    console.log(backendUrlLength)
+    const actualPath = oldImagePath.slice(backendUrlLength);
+    console.log(actualPath)//1696487619794-DSC_0032.JPG
 
     //delete file form uploads folder
     fs.unlink("uploads/" + actualPath, (err) => {
@@ -145,8 +149,12 @@ exports.deleteBlog = async (req, res) => {
     },
   });
   const imageUrl = allData[0].image;
-  const actualUrl = imageUrl.slice(23);
-  //   console.log(actualUrl); //like this-->1696487619794-DSC_0032.JPG
+  const backendUrlLength=process.env.PROJECT_URL.length
+  console.log(backendUrlLength)
+  const actualUrl = imageUrl.slice(backendUrlLength);
+  console.log(imageUrl)
+  console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+  console.log(actualUrl); //like this-->1696487619794-DSC_0032.JPG
   await blogs.destroy({
     where: {
       id: id,
